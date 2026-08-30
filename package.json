@@ -1,0 +1,15 @@
+{
+  "name": "commonplace-backend",
+  "version": "1.0.0",
+  "description": "Backend for a commonplace app ",
+  "keywords": [
+    "commonplace"
+  ],
+  "license": "ISC",
+  "author": "Jiten",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
