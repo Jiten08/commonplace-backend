@@ -99,7 +99,7 @@ const loginUser = asyncHandler(async (req,res) => {
   // check if given username exists and password matches with the encrypted password in database 
   // provide user an access and a refresh token 
   // store the refresh token in the database
-
+  console.log(req.body)
   const {email, username, password} = req.body 
 
   if (!(username || email)){
