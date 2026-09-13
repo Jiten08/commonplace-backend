@@ -5,6 +5,7 @@ import { User } from "../models/user.model.js"
 import {uploadOnCloudinary} from "../utils/cloudinary.js"
 import ApiResponse from "../utils/ApiResponse.js"
 import jwt from "jsonwebtoken"
+import APiResponse from '../utils/ApiResponse.js'
 
 const generateAccessAndRefreshToken = async(userId) => {
   try {
@@ -247,13 +248,27 @@ const changeCurrentPassword = asyncHandler(async(req, res) => {
   .json(
     new ApiResponse(200, {}, "Password changed successfully")
   )
- 
 
+})
+
+const getCurrentUser = asyncHandler( async(req, res) => {
+
+  return res
+  .status(200)
+  .json( new APiResponse(200, req.user, "current user fetched successfully"))
+
+
+})
+
+const updateAccountDetails = asyncHandler( async(req, res) => {
+  
 })
 
 export {
   registerUser,
   loginUser,
   logoutUser,
-  refereshAccessToken
+  refereshAccessToken,
+  changeCurrentPassword,
+  getCurrentUser
 }
