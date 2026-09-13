@@ -8,17 +8,18 @@ import ApiResponse from "../utils/ApiResponse.js"
 const generateAccessAndRefreshToken = async(userId) => {
   try {
     const user = await User.findById(userId)
-    const accessToken = user.generateAccessToken()
-    const refreshToken = user.generateRefreshToken()
+    const accessToken = await user.generateAccessToken()
+    const refreshToken = await user.generateRefreshToken()
     
     user.refreshToken = refreshToken
-    await user.save({validateBeforeSave: false})
+    await user.save({ validateBeforeSave: false })
 
     return {accessToken, refreshToken}
 
-  } catch (error) {
-    throw new ApiError(500, "Something went wrong while generating access and refresh tokens")
-    
+  } catch (error) {    
+      console.log("Token generation error: ", error)
+      throw new ApiError(500, "Something went wrong while generating access and refresh tokens")
+      
   }
 }
 
@@ -99,7 +100,7 @@ const loginUser = asyncHandler(async (req,res) => {
   // check if given username exists and password matches with the encrypted password in database 
   // provide user an access and a refresh token 
   // store the refresh token in the database
-  console.log(req.body)
+  
   const {email, username, password} = req.body 
 
   if (!(username || email)){
@@ -119,7 +120,7 @@ const loginUser = asyncHandler(async (req,res) => {
   if (!isPasswordValid) {
     throw new ApiError(401, "Invalid user credentials")
   }
-
+  
   const {accessToken, refreshToken} = await generateAccessAndRefreshToken(user._id)
 
   const loggedInUser = await User.findById(user._id).select("-password -refreshToken")
